@@ -16,6 +16,24 @@ export default function Dashboard() {
     fetchTransactions({ month: filterMonth, year: filterYear, categoryId: filterCategory });
   }, [fetchTransactions, filterMonth, filterYear, filterCategory]);
 
+  const topExpensesByCategory = useMemo(() => {
+    const expenses = transactions.filter(t => t.categories?.type === 'GİDER');
+    
+    // Group and sum by category name
+    const grouped = expenses.reduce((acc, t) => {
+      const catName = t.categories?.name || 'Bilinmeyen Kategori';
+      if (!acc[catName]) acc[catName] = 0;
+      acc[catName] += Number(t.amount);
+      return acc;
+    }, {});
+
+    // Convert to array, sort, and take top 5
+    return Object.entries(grouped)
+      .map(([name, total]) => ({ name, total }))
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 5);
+  }, [transactions]);
+
   const { income, expense, investment } = useMemo(() => {
     return transactions.reduce(
       (acc, t) => {
@@ -101,20 +119,16 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {transactions
-                .filter(t => t.categories?.type === 'GİDER')
-                .sort((a, b) => Number(b.amount) - Number(a.amount))
-                .slice(0, 5)
-                .map((t, idx) => (
-                  <tr key={t.id}>
+              {topExpensesByCategory.map((c, idx) => (
+                  <tr key={c.name}>
                     <td>
                       {idx === 0 ? '🥇 ' : idx === 1 ? '🥈 ' : idx === 2 ? '🥉 ' : ''}
-                      {t.categories?.name}
+                      {c.name}
                     </td>
-                    <td>{formatCurrency(t.amount)}</td>
+                    <td>{formatCurrency(c.total)}</td>
                   </tr>
                 ))}
-              {transactions.filter(t => t.categories?.type === 'GİDER').length === 0 && (
+              {topExpensesByCategory.length === 0 && (
                  <tr><td colSpan="2" style={{textAlign:'center', color: 'var(--color-text-secondary)'}}>Gider bulunamadı.</td></tr>
               )}
             </tbody>
