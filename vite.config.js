@@ -4,19 +4,29 @@ import { VitePWA } from 'vite-plugin-pwa';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  base: '/',
   plugins: [
     tailwindcss(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      manifest: false, // public/manifest.json kullanılıyor
+      includeAssets: ['favicon.svg', 'img/logo.png', 'img/background.png', 'manifest.json'],
+      manifest: false, // Или public/manifest.json kullanılmaya devam edilir.
+      devOptions: {
+        enabled: true,
+      },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,html,ico,svg,json}'],
+        globIgnores: ['**/img/background.png'],
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/jczrnyvzswxocrsouguz\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',
-            options: { cacheName: 'supabase-api-cache', expiration: { maxAgeSeconds: 60 * 60 } },
+            options: {
+              cacheName: 'supabase-api-cache',
+              expiration: { maxAgeSeconds: 60 * 60 },
+            },
           },
         ],
       },
