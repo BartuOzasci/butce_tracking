@@ -1,13 +1,18 @@
 .homeContainer {
   position: relative;
-  height: calc(100vh - 64px); /* Subtract navbar height */
-  margin: calc(var(--space-md) * -1); /* Override layout padding */
+  width: 100%;
+  min-height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Arka plan artık global body üzerinde tanımlanıyor */
   background: transparent;
+  z-index: 2;
+}
+
+.homeContainer::before,
+.homeContainer::after {
+  display: none;
 }
 
 .heroContent {
@@ -42,4 +47,15 @@
   font-size: var(--font-size-lg);
   color: var(--color-text-secondary);
   max-width: 600px;
+}
+
+@keyframes rotateBackdrop {
+  0% { transform: translateZ(-2px) rotateX(12deg) rotateY(-18deg) rotateZ(0deg); }
+  50% { transform: translateZ(-2px) rotateX(14deg) rotateY(18deg) rotateZ(3deg); }
+  100% { transform: translateZ(-2px) rotateX(12deg) rotateY(-18deg) rotateZ(0deg); }
+}
+
+@keyframes pulseBackdrop {
+  0%, 100% { opacity: 0.75; transform: scale(1) translateZ(-1px); }
+  50% { opacity: 0.9; transform: scale(1.02) translateZ(-1px); }
 }

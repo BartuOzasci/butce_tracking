@@ -12,6 +12,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  overflow: visible;
 }
 
 .navContainer {
@@ -97,6 +98,12 @@
   background-color: var(--color-bg-secondary);
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-ms) 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
 }
 
 .mobileNav a {

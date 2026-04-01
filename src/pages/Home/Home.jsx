@@ -1,9 +1,11 @@
 import { TypeAnimation } from 'react-type-animation';
+import ParticlesBackground from './ParticleBackground';
 import styles from './Home.module.css';
 
 export default function Home() {
   return (
     <div className={styles.homeContainer}>
+      <ParticlesBackground />
       <div className={styles.heroContent}>
         <TypeAnimation
           sequence={[
