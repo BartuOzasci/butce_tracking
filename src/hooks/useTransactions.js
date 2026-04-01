@@ -1,14 +1,17 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { getTransactions, createTransactions, updateTransaction, deleteTransaction, deleteInstallmentGroup } from '../api/transactionsApi';
 
 export const useTransactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  const lastFiltersRef = useRef({});
 
   const fetchTransactions = useCallback(async (filters = {}) => {
     try {
       setLoading(true);
+      lastFiltersRef.current = filters;
       const data = await getTransactions(filters);
       setTransactions(data);
     } catch (err) {
@@ -20,25 +23,23 @@ export const useTransactions = () => {
 
   const addTransactions = async (payloadArray) => {
     const newTx = await createTransactions(payloadArray);
-    if (newTx && newTx.length) {
-      setTransactions(prev => [...newTx, ...prev].sort((a,b) => new Date(b.date) - new Date(a.date)));
-    }
+    await fetchTransactions(lastFiltersRef.current);
     return newTx;
   };
 
   const editTransaction = async (id, payload) => {
-    const updated = await updateTransaction(id, payload);
-    setTransactions(prev => prev.map(t => t.id === id ? updated : t));
+    await updateTransaction(id, payload);
+    await fetchTransactions(lastFiltersRef.current);
   };
 
   const removeTransaction = async (id) => {
     await deleteTransaction(id);
-    setTransactions(prev => prev.filter(t => t.id !== id));
+    await fetchTransactions(lastFiltersRef.current);
   };
 
   const removeGroup = async (groupId) => {
     await deleteInstallmentGroup(groupId);
-    setTransactions(prev => prev.filter(t => t.installment_group_id !== groupId));
+    await fetchTransactions(lastFiltersRef.current);
   };
 
   return { transactions, loading, error, fetchTransactions, addTransactions, editTransaction, removeTransaction, removeGroup };

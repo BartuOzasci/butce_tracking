@@ -229,9 +229,11 @@ export default function Transactions() {
                     const bannerStyle = type === 'GELİR' ? styles.bannerGelir : type === 'GİDER' ? styles.bannerGider : styles.bannerYatirim;
 
                     rows.push(
-                      <tr key={t.id} style={{ position: 'relative' }}>
-                        <div className={`${styles.typeBanner} ${bannerStyle}`} />
-                        <td>{formatDateTR(t.date)}</td>
+                      <tr key={t.id}>
+                        <td style={{ position: 'relative' }}>
+                          <div className={`${styles.typeBanner} ${bannerStyle}`} />
+                          {formatDateTR(t.date)}
+                        </td>
                         <td>
                           {t.categories?.name} <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>({type})</span>
                         </td>
