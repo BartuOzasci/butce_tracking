@@ -230,9 +230,11 @@ export default function Transactions() {
 
                     rows.push(
                       <tr key={t.id}>
-                        <td style={{ position: 'relative' }}>
-                          <div className={`${styles.typeBanner} ${bannerStyle}`} />
-                          {formatDateTR(t.date)}
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div className={`${styles.typeBanner} ${bannerStyle}`} />
+                            {formatDateTR(t.date)}
+                          </div>
                         </td>
                         <td>
                           {t.categories?.name} <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>({type})</span>
