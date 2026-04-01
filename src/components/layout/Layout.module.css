@@ -1,0 +1,123 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.navbar {
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+}
+
+.logo img {
+  border-radius: var(--radius-sm);
+}
+
+.desktopNav {
+  display: none;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 769px) {
+  .desktopNav {
+    display: flex;
+  }
+}
+
+.desktopNav a {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  padding: var(--space-xs) 0;
+  transition: color var(--transition-base);
+}
+
+.desktopNav a:hover {
+  color: var(--color-text-primary);
+}
+
+.desktopNav a.active {
+  color: var(--color-accent-blue);
+  border-bottom: 2px solid var(--color-accent-blue);
+}
+
+.mobileMenuBtn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-2xl);
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.mobileMenuBtnActive {
+  background-color: rgba(88, 166, 255, 0.15);
+  color: var(--color-accent-blue);
+  border-color: var(--color-accent-blue);
+}
+
+@media (min-width: 769px) {
+  .mobileMenuBtn {
+    display: none;
+  }
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-ms) 0;
+}
+
+.mobileNav a {
+  padding: var(--space-md);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobileNav a:last-child {
+  border-bottom: none;
+}
+
+.mobileNav a.active {
+  color: var(--color-accent-blue);
+  background-color: var(--color-bg-tertiary);
+}
+
+.mainContent {
+  flex: 1;
+  padding: var(--space-md);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}

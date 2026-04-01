@@ -1,0 +1,45 @@
+.homeContainer {
+  position: relative;
+  height: calc(100vh - 64px); /* Subtract navbar height */
+  margin: calc(var(--space-md) * -1); /* Override layout padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Arka plan artık global body üzerinde tanımlanıyor */
+  background: transparent;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.typewriter {
+  font-size: var(--font-size-2xl);
+  font-family: var(--font-mono);
+  color: var(--color-accent-blue);
+  font-weight: 500;
+  min-height: 40px; /* Prevent layout shift */
+}
+
+.title {
+  font-size: var(--font-size-4xl);
+  margin: 0;
+  background: linear-gradient(to right, var(--color-text-primary), var(--color-text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+}
